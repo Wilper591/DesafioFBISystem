@@ -1,3 +1,4 @@
+const URL_BASE = "https://fbisystem.onrender.com";
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const logInBtn = document.getElementById("logIn");
@@ -15,7 +16,7 @@ logInBtn.addEventListener("click", async () => {
   }
   let { data } = await login(email.value, password.value);
   if (!data.is_Active) {
-    location.replace("http://localhost:3000/error.html");
+    location.replace(`${URL_BASE}/error.html`);
   } else {
     /* Guardo el token */
     sessionStorage.setItem("token", JSON.stringify(data.token));
@@ -27,7 +28,7 @@ logInBtn.addEventListener("click", async () => {
 
 const login = async (email, password) => {
   const response = await axios.get(
-    `http://localhost:3000/apiV1/SignIn?email=${email}&password=${password}`
+    `${URL_BASE}/apiV1/SignIn?email=${email}&password=${password}`
   );
   return response;
 };
@@ -35,7 +36,7 @@ const login = async (email, password) => {
 const peticionToken = async () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const response = await axios.get(
-    `http://localhost:3000/apiV1/Logged?token=${token}`
+    `${URL_BASE}/apiV1/Logged?token=${token}`
   );
   if (response.data.is_Active === true) {
     secretRoute.classList.remove("d-none");

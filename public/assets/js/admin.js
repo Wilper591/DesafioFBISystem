@@ -1,3 +1,4 @@
+const URL_BASE = "https://fbisystem.onrender.com";
 const logout = document.querySelector("#logOut");
 const agentLogged = document.querySelector("#usuario");
 
@@ -6,10 +7,10 @@ logout.addEventListener("click", () => {
 });
 
 if (
-  window.location.href === "http://localhost:3000/admin.html" &&
+  window.location.href === `${URL_BASE}/admin.html` &&
   !sessionStorage.getItem("token")
 ) {
-  location.replace("http://localhost:3000");
+  location.replace(`${URL_BASE}`);
 } else {
   const user = sessionStorage.getItem("email");
   agentLogged.innerHTML += `${user}`;
@@ -18,7 +19,7 @@ if (
 const verificarToken = async () => {
   const token = JSON.parse(sessionStorage.getItem("token"));
   const response = await axios.get(
-    `http://localhost:3000/apiV1/admin?token=${token}`
+    `${URL_BASE}/apiV1/admin?token=${token}`
   );
   if (!response.data.is_Active) {
     loggedOut();
@@ -30,7 +31,7 @@ const verificarToken = async () => {
 const loggedOut = () => {
   sessionStorage.removeItem("token");
   sessionStorage.removeItem("email");
-  location.replace("http://localhost:3000");
+  location.replace(`${URL_BASE}`);
 };
 
 setInterval(() => {
